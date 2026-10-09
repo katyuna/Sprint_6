@@ -1,14 +1,15 @@
-from helpers.helpers import wait_for_element
+import allure
+
 from locators.locators_cookie_floating_footer import CookieLocators
+from pages.base_page import BasePage
 
 
-class PageCookieFloatingFooter(CookieLocators):
+class PageCookieFloatingFooter(BasePage):
 
-    def __init__(self, driver):
-        self.driver = driver
-
+    @allure.step("Проверить, показан ли баннер cookie")
     def is_cookie_displayed(self):
-        return bool(self.driver.find_elements(*self.BUTTON_COOKIE))
+        return bool(self.find_elements(CookieLocators.BUTTON_COOKIE))
 
+    @allure.step("Закрыть баннер cookie")
     def click_cookie(self):
-        wait_for_element(self.driver, self.BUTTON_COOKIE).click()
+        self.click_element(CookieLocators.BUTTON_COOKIE)

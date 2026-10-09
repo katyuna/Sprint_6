@@ -1,29 +1,32 @@
-from helpers.helpers import wait_for_element, wait_for_element_visible, wait_for_element_clickable
+import allure
+
 from locators.locators_main_page import MainPageLocators
+from pages.base_page import BasePage
 
-class PageMain(MainPageLocators):
 
-    def __init__(self, driver):
-        self.driver = driver
+class PageMain(BasePage):
 
-    def click_question(self, question_locator):
-        question = wait_for_element(self.driver, question_locator)
-        # behavior: 'instant' — без плавной прокрутки, иначе клик попадает в картинку самоката
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center', behavior: 'instant'});", question)
-        wait_for_element_clickable(self.driver, question_locator).click()
+    ORDER_BUTTONS = {
+        "top": MainPageLocators.BUTTON_ORDER_TOP,
+        "bottom": MainPageLocators.BUTTON_ORDER_BOTTOM,
+    }
 
-    def get_answer_text(self, answer_locator):
-        return wait_for_element_visible(self.driver, answer_locator).text
+    @allure.step("Нажать на вопрос №{index} в разделе «Вопросы о важном»")
+    def click_question(self, index):
+        question = self.format_locator(MainPageLocators.QUESTION, index)
+        self.scroll_to_element(question)
+        self.click_element(question)
 
-    def click_button(self, button_locator):
-        button = wait_for_element_clickable(self.driver, button_locator)
-        button.click()
+    @allure.step("Получить текст ответа на вопрос №{index}")
+    def get_answer_text(self, index):
+        return self.get_element_text(self.format_locator(MainPageLocators.ANSWER, index))
 
-    def fill_input_field(self, input_field_locator, input_field_text):
-        input_field = wait_for_element(self.driver, input_field_locator)
-        input_field.send_keys(input_field_text)
+    @allure.step("Проверить, что кнопка «Заказать» в шапке видна")
+    def is_order_button_top_displayed(self):
+        return self.is_element_displayed(MainPageLocators.BUTTON_ORDER_TOP)
 
-    def choose_option(self, options_locator, option_locator):
-        wait_for_element(self.driver, options_locator).click()
-        wait_for_element(self.driver, option_locator).click()
-
+    @allure.step("Нажать кнопку «Заказать» ({position})")
+    def click_order_button(self, position):
+        button = self.ORDER_BUTTONS[position]
+        self.scroll_to_element(button)
+        self.click_element(button)

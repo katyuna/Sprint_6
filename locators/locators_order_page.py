@@ -1,8 +1,7 @@
 from selenium.webdriver.common.by import By
-from locators.locators_cookie_floating_footer import CookieLocators
 
 
-class OrderPageLocators(CookieLocators):
+class OrderPageLocators:
 
     INPUT_NAME = (By.XPATH, '//input[@placeholder="* Имя"]')
     INPUT_SURNAME = (By.XPATH, '//input[@placeholder="* Фамилия"]')
@@ -17,8 +16,8 @@ class OrderPageLocators(CookieLocators):
     INPUT_DATE = (By.XPATH, '//input[@placeholder="* Когда привезти самокат"]')
     DROPDOWN_RENTAL_PERIOD = (By.CLASS_NAME, "Dropdown-control")
     OPTION_RENTAL_PERIOD = (By.XPATH, '(//div[@class="Dropdown-option"])[1]')
-    CHECKBOX_BLACK = (By.ID, "black")
-    CHECKBOX_GREY = (By.ID, "grey")
+    # {} — цвет самоката: black или grey
+    CHECKBOX_COLOR = (By.ID, "{}")
     INPUT_COMMENT = (By.XPATH, '//input[@placeholder="Комментарий для курьера"]')
     BUTTON_ORDER_IN_FORM = (By.XPATH, '//div[contains(@class, "Order_Buttons")]/button[text()="Заказать"]')
 

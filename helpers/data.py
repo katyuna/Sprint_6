@@ -24,6 +24,9 @@ ANSWER_OUTSIDE_MCAD = "Да, обязательно. Всем самокатов
 # дата доставки — завтра, чтобы тест не устаревал
 DELIVERY_DATE = (datetime.date.today() + datetime.timedelta(days=1)).strftime("%d.%m.%Y")
 
+COLOR_BLACK = "black"
+COLOR_GREY = "grey"
+
 ORDER_NAME_1 = "Иван"
 ORDER_SURNAME_1 = "Петров"
 ORDER_ADDRESS_1 = "Москва, ул. Ленина, 1"
